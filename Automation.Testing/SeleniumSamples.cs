@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,10 @@ namespace Automation.Testing
     [TestClass]
     public class SeleniumSamples
     {
-        [DataTestMethod]
+        // Constants
+        const string URL = "https://gravitymvctestapplication.azurewebsites.net/";
+
+        [TestMethod]
         public void WebDriverSamples() {
             IWebDriver driver = new ChromeDriver();
             Thread.Sleep(1000);
@@ -27,6 +31,37 @@ namespace Automation.Testing
 
             driver = new InternetExplorerDriver();
             Thread.Sleep(1000);
+            driver.Dispose();
+        }
+        
+        [TestMethod]
+        public void WebElementSamples() {
+            var driver = new ChromeDriver();
+            // Not always mut most of the time will makde sure that page has been loaded before we start to interact with the page
+            // And maximazes the window
+            driver.Manage().Window.Maximize();
+            // Navigate to url
+            driver.Navigate().GoToUrl(URL);
+            // Find specific element and click on it
+            driver.FindElement(By.XPath("//a[.='Students']")).Click();
+            Thread.Sleep(2000);
+            driver.Dispose();
+        }
+
+        [TestMethod]
+        public void SelectElementSamples()
+        {
+            var driver = new ChromeDriver();
+            driver.Manage().Window.Maximize();
+            driver.Navigate().GoToUrl(URL);
+            driver.FindElement(By.XPath("//a[.='Courses']")).Click();
+            // Find the select elemenet, we save it in a value so that we can pass that value for 
+            var element = driver.FindElement(By.XPath("//select[@id='SelectedDepartment']"));
+            // Initialize SelectElement
+            var selectElement = new SelectElement(element);
+            // Using SelectElement we can select specific value (can select using Text, Index or Value)
+            selectElement.SelectByValue("3");
+            Thread.Sleep(2000);
             driver.Dispose();
         }
     }
