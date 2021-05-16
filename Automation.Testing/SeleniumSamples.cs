@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Automation.Extensions.Components;
+using Automation.Extensions.Contracts;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
@@ -18,7 +20,14 @@ namespace Automation.Testing
     {
         // Constants
         const string URL = "https://gravitymvctestapplication.azurewebsites.net/";
+        const string DRIVER_PATH = "C:\\Users\\Aina\\Desktop\\Main\\Programmesana\\Selenium\\web-drivers";
+        const string CHROME = "chrome";
+        const string FIREFOX = "firefox";
+        const string IE = "ie";
+        const string EDGE = "edge";
 
+        /**
+         * 
         [TestMethod]
         public void WebDriverSamples() {
             IWebDriver driver = new ChromeDriver();
@@ -61,6 +70,19 @@ namespace Automation.Testing
             var selectElement = new SelectElement(element);
             // Using SelectElement we can select specific value (can select using Text, Index or Value)
             selectElement.SelectByValue("3");
+            Thread.Sleep(2000);
+            driver.Dispose();
+        }
+        */
+
+        [TestMethod]
+        public void WebDriverFactorySample() 
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = EDGE, Binaries = DRIVER_PATH }).Get();
+
+            driver.Manage().Window.Maximize();
+            driver.Navigate().GoToUrl(URL);
+            driver.FindElement(By.XPath("//a[.='Students']")).Click();
             Thread.Sleep(2000);
             driver.Dispose();
         }

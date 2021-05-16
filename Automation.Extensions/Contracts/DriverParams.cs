@@ -16,5 +16,7 @@ namespace Automation.Extensions.Contracts
 
         [DataMember]
         public string Binaries { get; set; }
+        [DataMember]
+        public int timeSpan { get; set; }
     }
 }
