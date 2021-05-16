@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
+    <TargetFramework>net4.6.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -15,6 +15,10 @@
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="90.0.4430.2400" />
     <PackageReference Include="Selenium.WebDriver.GeckoDriver" Version="0.29.1" />
     <PackageReference Include="Selenium.WebDriver.IEDriver" Version="3.150.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Automation.Extensions\Automation.Extensions.csproj" />
   </ItemGroup>
 
 </Project>
