@@ -74,7 +74,7 @@ namespace Automation.Testing
             driver.Dispose();
         }
         */
-
+        /**
         [TestMethod]
         public void WebDriverFactorySample()
         { 
@@ -112,6 +112,35 @@ namespace Automation.Testing
             driver.GoToUrl(URL);
             driver.GetElement(By.XPath("//a[.='Students']")).Click();
             driver.GetElement(By.XPath("//select[@id='SelectedDepartment']")).AsSelect().SelectByValue("3");
+            driver.Dispose();
+        }
+
+        [TestMethod]
+        public void GetElementsSample()
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = CHROME, Binaries = DRIVER_PATH }).Get();
+            driver.GoToUrl(URL);
+            var elements = driver.GetElements(By.XPath("//li[contains(@class, 'nav-item')]/a"));
+            driver.Dispose();
+        }
+        */
+        [TestMethod]
+        public void GetVisibleElement() 
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = CHROME, Binaries = DRIVER_PATH }).Get();
+            driver.GoToUrl(URL);
+            driver.GetVisibleElement(By.XPath("//a[.='Students']")).Click();
+            //driver.GetVisibleElement(By.XPath("//a[.='Students']"), TimeSpan.FromSeconds(20)).Click();
+            driver.Dispose();
+        }
+
+        [TestMethod]
+        public void GetVisibleElements()
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = CHROME, Binaries = DRIVER_PATH }).Get();
+            driver.GoToUrl(URL);
+            driver.GetVisibleElements(By.XPath("//a[.='Students']"));
+            //driver.GetVisibleElements(By.XPath("//a[.='Students']"), TimeSpan.FromSeconds(20));
             driver.Dispose();
         }
     }
