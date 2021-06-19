@@ -76,14 +76,42 @@ namespace Automation.Testing
         */
 
         [TestMethod]
-        public void WebDriverFactorySample() 
-        {
+        public void WebDriverFactorySample()
+        { 
             var driver = new WebDriverFactory(new DriverParams { Driver = EDGE, Binaries = DRIVER_PATH }).Get();
-
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(URL);
             driver.FindElement(By.XPath("//a[.='Students']")).Click();
             Thread.Sleep(2000);
+            driver.Dispose();
+        }
+
+        [TestMethod]
+        public void GoToUrlSapmle()
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = CHROME, Binaries = DRIVER_PATH }).Get();
+            driver.GoToUrl(URL);
+            driver.Dispose();
+        }
+
+        [TestMethod]
+        public void GetElementSample() 
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = EDGE, Binaries = DRIVER_PATH }).Get();
+            driver.GoToUrl(URL);
+            driver.GetElement(By.XPath("//a[.='Students']")).Click();
+            // driver.GetElement(By.XPath("//a[.='Students']"), TimeSpan.FromSeconds(20)).Click();
+            Thread.Sleep(2000);
+            driver.Dispose();
+        }
+
+        [TestMethod]
+        public void SelectElementSample2()
+        {
+            var driver = new ChromeDriver();
+            driver.GoToUrl(URL);
+            driver.GetElement(By.XPath("//a[.='Students']")).Click();
+            driver.GetElement(By.XPath("//select[@id='SelectedDepartment']")).AsSelect().SelectByValue("3");
             driver.Dispose();
         }
     }
