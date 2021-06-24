@@ -8,6 +8,7 @@ using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -141,6 +142,46 @@ namespace Automation.Testing
             driver.GoToUrl(URL);
             driver.GetVisibleElements(By.XPath("//a[.='Students']"));
             //driver.GetVisibleElements(By.XPath("//a[.='Students']"), TimeSpan.FromSeconds(20));
+            driver.Dispose();
+        }
+
+        [TestMethod]
+        public void GetEnabledElement() 
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = CHROME, Binaries = DRIVER_PATH }).Get();
+            driver.GoToUrl(URL);
+            driver.GetElement(By.XPath("//a[.='Students']")).Click();
+            driver.GetEnabledElement(By.XPath("//input[@id='SearchString']")).SendKeys("Hello Its a test ");
+            //driver.GetEnabledElements(By.XPath("//a[.='Students']"), TimeSpan.FromSeconds(20));
+            driver.Dispose();
+        }
+
+        [TestMethod]
+        public void GetEnabledElements()
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = CHROME, Binaries = DRIVER_PATH }).Get();
+            driver.GoToUrl(URL);
+            driver.GetVisibleElements(By.XPath("//a[.='Students']"));
+            //driver.GetVisibleElements(By.XPath("//a[.='Students']"), TimeSpan.FromSeconds(20));
+            driver.Dispose();
+        }
+
+        [TestMethod]
+        public void VerticalWindowScrollSample()
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = CHROME, Binaries = DRIVER_PATH }).Get();
+            driver.GoToUrl(URL);
+            driver.Manage().Window.Size = new Size(100, 500);
+            driver.VerticalWindowScroll(200);
+            driver.Dispose();
+        }
+
+        [TestMethod]
+        public void ActionSample() 
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = CHROME, Binaries = DRIVER_PATH }).Get();
+            driver.GoToUrl(URL);
+            driver.GetElement(By.XPath("//a[.='Students']")).Actions().Click().Build().Perform();
             driver.Dispose();
         }
     }
