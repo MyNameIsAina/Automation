@@ -182,5 +182,40 @@ namespace Automation.Extensions.Components
             }
             return element;
         }
+
+        /**
+         * Clears the element suing backspace with 50 ms interval inbetween
+         */
+        public static IWebElement ForceClear(this IWebElement element) 
+        {
+            var value = element.GetAttribute("value");
+            element.SendKeys(Keys.End);
+            for (int i = 0; i < value.Length; i++)
+            {
+                element.SendKeys(Keys.Backspace);
+                Thread.Sleep(50);
+            }
+            return element;
+        }
+
+        /**
+         * Submit form by Zero based inxded value
+         */
+        public static IWebDriver SubmitForm(this IWebDriver driver, int index) 
+        {
+            var executor = (IJavaScriptExecutor)driver;
+            executor.ExecuteScript($"document.forms[{index}].submit();");
+            return driver;
+        }
+
+        /**
+        * Submit form by using the ID
+        */
+        public static IWebDriver SubmitForm(this IWebDriver driver, string id)
+        {
+            var executor = (IJavaScriptExecutor)driver;
+            executor.ExecuteScript($"document.forms[\"{id}\"].submit();");
+            return driver;
+        }
     }
 }

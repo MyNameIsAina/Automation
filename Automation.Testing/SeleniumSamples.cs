@@ -201,8 +201,38 @@ namespace Automation.Testing
             driver.GoToUrl(URL);
             driver.GetElement(By.XPath("//a[.='Students']")).Click();
             driver.GetEnabledElement(By.XPath("//input[@id='SearchString']")).SendKeys("Hello Its a test ", 100);
-            //driver.GetEnabledElements(By.XPath("//a[.='Students']"), TimeSpan.FromSeconds(20));
             driver.Dispose();
+        }
+
+        [TestMethod]
+        public void ForceClearSample() 
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = CHROME, Binaries = DRIVER_PATH }).Get();
+            driver.GoToUrl(URL);
+            driver.GetElement(By.XPath("//a[.='Students']")).Click();
+            var element = driver.GetEnabledElement(By.XPath("//input[@id='SearchString']"));
+            element.SendKeys("Hello Its a test ", 100).SendKeys(Keys.Home);
+            element.ForceClear();
+
+            driver.Dispose();
+
+        }
+
+        [TestMethod]
+        public void SubmitFormSample()
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = CHROME, Binaries = DRIVER_PATH }).Get();
+            driver.GoToUrl(URL);
+            driver.GetElement(By.XPath("//a[.='Students']")).Click();
+            var element = driver.GetEnabledElement(By.XPath("//input[@id='SearchString']"));
+            element.SendKeys("Alexander", 100);
+            //var formElement = driver.GetElement(By.XPath("//form[@action='/Student']"));
+            //first and only form in the page, but in real life should find the form element first
+
+            // dont know how to get the index of an element though
+            driver.SubmitForm(0);
+            driver.Dispose();
+
         }
     }
 }
