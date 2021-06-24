@@ -184,5 +184,25 @@ namespace Automation.Testing
             driver.GetElement(By.XPath("//a[.='Students']")).Actions().Click().Build().Perform();
             driver.Dispose();
         }
+
+        [TestMethod]
+        public void ForcedClickSample()
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = CHROME, Binaries = DRIVER_PATH }).Get();
+            driver.GoToUrl(URL);
+            driver.GetElement(By.XPath("//a[.='Students']")).ForceClick();
+            driver.Dispose();
+        }
+
+        [TestMethod]
+        public void SendKeysWithInterval() 
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = CHROME, Binaries = DRIVER_PATH }).Get();
+            driver.GoToUrl(URL);
+            driver.GetElement(By.XPath("//a[.='Students']")).Click();
+            driver.GetEnabledElement(By.XPath("//input[@id='SearchString']")).SendKeys("Hello Its a test ", 100);
+            //driver.GetEnabledElements(By.XPath("//a[.='Students']"), TimeSpan.FromSeconds(20));
+            driver.Dispose();
+        }
     }
 }
