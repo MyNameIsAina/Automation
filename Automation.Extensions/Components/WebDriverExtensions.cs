@@ -143,6 +143,9 @@ namespace Automation.Extensions.Components
             return driver;
         }
 
+        /**
+         * Set the first action and return it
+         */
         public static Actions Actions(this IWebElement element) 
         {
             //To get the driver from the element. This Interface comes from RemoteWebElement and this element implements a lot of interfaces including the IWrapsDriver
@@ -150,6 +153,34 @@ namespace Automation.Extensions.Components
             var actions = new Actions(driver);
             //we will return the first action
             return actions.MoveToElement(element);
+        }
+
+        /**
+         *  Simpified click method
+         */
+        public static IWebElement ForceClick(this IWebElement element) 
+        {
+            //Extract the driver from the element
+            var driver = ((IWrapsDriver)element).WrappedDriver;
+            //Extract JS executor from the driver
+            var executor = (IJavaScriptExecutor)driver;
+            //Executes js version of the click functionality, whitch is simpler than the Selenium one
+            executor.ExecuteScript("arguments[0].click()", element);
+            return element;
+        }
+
+        /**
+         * Send keys with a set inteval between the pressed keys
+         * this is an overload for the exiting method that exist under IWebElement
+         */
+        public static IWebElement SendKeys(this IWebElement element, string text, int interval) 
+        {
+            foreach (var @char in text)
+            {
+                element.SendKeys($"{@char}");
+                Thread.Sleep(interval);
+            }
+            return element;
         }
     }
 }
